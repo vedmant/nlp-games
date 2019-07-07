@@ -41,8 +41,9 @@ const webpackConfig = merge(commonConfig, {
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,
                     name (module) {
-                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-                        return `npm.${packageName.replace('@', '')}`;
+                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+                        if (! packageName) return null
+                        return `npm.${packageName[1].replace('@', '')}`;
                     },
                 },
                 styles: {
