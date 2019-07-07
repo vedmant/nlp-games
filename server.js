@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 
-const openBrowser = require('./lib/open-browser');
+// const openBrowser = require('./lib/open-browser');
 
 const app = express();
 const publicPath = path.join(process.cwd(), 'dist');
@@ -20,4 +20,4 @@ console.log('Server started!');
 // eslint-disable-next-line no-console
 console.log(`http://localhost:${port}`);
 
-openBrowser(`http://localhost:${port}`);
+// openBrowser(`http://localhost:${port}`);

@@ -16,8 +16,8 @@ const webpackConfig = merge(commonConfig, {
     output: {
         path: helpers.root('dist'),
         publicPath: '/',
-        filename: 'js/[hash].js',
-        chunkFilename: 'js/[id].[hash].chunk.js'
+        filename: 'js/[name].[hash].js',
+        chunkFilename: 'js/[name].[hash].chunk.js'
     },
     optimization: {
         runtimeChunk: 'single',
@@ -41,9 +41,7 @@ const webpackConfig = merge(commonConfig, {
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,
                     name (module) {
-                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
-                        if (! packageName) return null
-                        return `npm.${packageName[1].replace('@', '')}`;
+                        return 'vendor'
                     },
                 },
                 styles: {
