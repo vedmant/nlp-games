@@ -46,6 +46,12 @@ const speeds = [5000, 3000, 2000, 1000, 500, 250]
 
 export default {
   name: 'alpha',
+  props: {
+    three: {
+      type: Boolean,
+      default: true,
+    }
+  },
 
   components: {Navbar, VueSlider},
 
@@ -54,7 +60,6 @@ export default {
       show: true,
       posX: 0,
       posY: 0,
-      three: true,
       l1: '',
       l2: '',
       l3: '',

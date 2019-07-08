@@ -10,6 +10,7 @@ const helpers                  = require('./helpers');
 const commonConfig             = require('./webpack.config.common');
 const isProd                   = process.env.NODE_ENV === 'production';
 const environment              = isProd ? require('./env/prod.env') : require('./env/staging.env');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const webpackConfig = merge(commonConfig, {
     mode: 'production',
@@ -35,8 +36,8 @@ const webpackConfig = merge(commonConfig, {
         ],
         splitChunks: {
             chunks: 'all',
-            maxInitialRequests: Infinity,
-            minSize: 0,
+            maxInitialRequests: 3,
+            minSize: 30000,
             cacheGroups: {
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,
@@ -49,11 +50,17 @@ const webpackConfig = merge(commonConfig, {
                     name: 'styles',
                     chunks: 'all',
                     enforce: true
-                }
+                },
+                default: {
+                  minChunks: 2,
+                  priority: -20,
+                  reuseExistingChunk: true
+                },
             }
         }
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new webpack.EnvironmentPlugin(environment),
         new MiniCSSExtractPlugin({
             filename: 'css/[name].[hash].css',

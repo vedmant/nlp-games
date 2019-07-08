@@ -7,15 +7,12 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <!-- <li class="nav-item active">
-          <router-link to="home" class="nav-link">Домой</router-link>
-        </li> -->
-        <li class="nav-item">
-          <router-link to="words" class="nav-link">Алфавит</router-link>
-        </li>
-        <!-- <li class="nav-item">
-          <router-link to="words" class="nav-link">Радуга</router-link>
-        </li> -->
+        <router-link tag="li" to="/alpha2" active-class="active">
+          <a class="nav-link">Алфавит 2</a>
+        </router-link>
+        <router-link tag="li" to="/alpha3" active-class="active">
+          <a class="nav-link">Алфавит 3</a>
+        </router-link>
       </ul>
 
       <slot></slot>

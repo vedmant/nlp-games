@@ -13,14 +13,21 @@ const router = new Router({
       component: Home,
     },
     {
-      path: '/alpha',
-      name: 'Alphabet',
+      path: '/alpha2',
+      name: 'Alphabet 2',
       component: Alpha,
+      props: {three: false},
+    },
+    {
+      path: '/alpha3',
+      name: 'Alphabet 3',
+      component: Alpha,
+      props: {three: true},
     },
   ],
 })
 
-router.replace('/alpha')
+router.replace('/alpha2')
 
 
 export default router
