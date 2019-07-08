@@ -26,10 +26,8 @@
       </form>
     </navbar>
     <div class="game" ref="game" @keyup="keyup">
-      <div v-show="show && ! showTits" ref="letters" class="letters" :style="styles">
-        <div class="l1">{{ l1 }}</div>
-        <div class="l2">{{ l2 }}</div>
-        <div class="l2" v-if="three">{{ l3 }}</div>
+      <div v-show="! showTits" ref="word" class="word" :style="styles">
+        {{ word }}
       </div>
       <div class="tits" v-show="showTits"></div>
     </div>
@@ -40,34 +38,24 @@
 import Navbar from './Navbar'
 import VueNumberInput from '@chenfengyuan/vue-number-input'
 import VueSlider from 'vue-slider-component'
-import { setTimeout, clearTimeout } from 'timers';
+import { setTimeout, clearTimeout } from 'timers'
 
-const all = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с',
-        'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ы', 'э', 'ю', 'я']
-
-const lros = ['л', 'п', 'о']
+const colors = ['red', 'green', 'yellow', 'blue', 'black']
+const words = ['Красный', 'Зеленый', 'Желтый', 'Синий', 'Черный', 'Голубой', 'Хлопок', 'Прыжок']
 
 const speeds = [5000, 3000, 2000, 1000, 500, 250]
 
 export default {
-  name: 'alpha',
-  props: {
-    three: {
-      type: Boolean,
-      default: true,
-    }
-  },
+  name: 'rainbow',
 
   components: {Navbar, VueSlider},
 
   data () {
     return {
-      show: true,
       posX: 0,
       posY: 0,
-      l1: '',
-      l2: '',
-      l3: '',
+      word: words[0],
+      color: colors[0],
       speed: 1,
       size: 3,
       timeout: 1000,
@@ -102,6 +90,7 @@ export default {
         top: this.posY + 'px',
         left: this.posX + 'px',
         fontSize: (this.size * 20 + 40) + 'px',
+        color: this.color,
       }
     },
 
@@ -126,12 +115,11 @@ export default {
     },
 
     recalc () {
-      this.l1 = all[Math.round(Math.random() * (all.length - 1))]
-      this.l2 = lros[Math.round(Math.random() * (lros.length - 1))]
-      this.l3 = lros[Math.round(Math.random() * (lros.length - 1))]
+      this.word = words[Math.round(Math.random() * (words.length - 1))]
+      this.color = colors[Math.round(Math.random() * (colors.length - 1))]
       this.$nextTick(() => {
-        this.posX = 25 + Math.round((this.$refs.game.clientWidth - this.$refs.letters.clientWidth - 50) * Math.random())
-        this.posY = 25 + Math.round((this.$refs.game.clientHeight - this.$refs.letters.clientHeight - 50) * Math.random())
+        this.posX = 25 + Math.round((this.$refs.game.clientWidth - this.$refs.word.clientWidth - 50) * Math.random())
+        this.posY = 25 + Math.round((this.$refs.game.clientHeight - this.$refs.word.clientHeight - 50) * Math.random())
       })
     },
 
@@ -146,7 +134,7 @@ export default {
 
 <style scoped>
   .game { height: calc(100vh - 56px); position: relative; }
-  .letters {
+  .word {
     position: relative; display: inline-block; line-height: 1;
     text-align: center; text-transform: uppercase; font-weight: bold;
   }

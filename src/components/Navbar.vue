@@ -7,11 +7,14 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <router-link tag="li" to="/alpha2" active-class="active">
+        <router-link tag="li" to="/alpha2" class="nav-item" active-class="active">
           <a class="nav-link">Алфавит 2</a>
         </router-link>
-        <router-link tag="li" to="/alpha3" active-class="active">
+        <router-link tag="li" to="/alpha3" class="nav-item" active-class="active">
           <a class="nav-link">Алфавит 3</a>
+        </router-link>
+        <router-link tag="li" to="/rainbow" class="nav-item" active-class="active">
+          <a class="nav-link">Радуга</a>
         </router-link>
       </ul>
 
