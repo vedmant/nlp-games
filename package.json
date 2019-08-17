@@ -49,6 +49,7 @@
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
     "vue": "^2.6.10",
+    "vue-i18n": "^8.14.0",
     "vue-router": "^3.0.7",
     "vue-slider-component": "^3.0.33"
   }

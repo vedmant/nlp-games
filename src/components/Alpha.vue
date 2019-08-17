@@ -1,27 +1,30 @@
 <template>
   <div>
     <navbar>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Настройки
-          </a>
-          <div class="dropdown-menu p-4 dropdown-menu-right" @click="(e) => e.stopPropagation()" aria-labelledby="navbarDropdown">
-            <p class="mb-4">
-              Скорость
-              <vue-slider v-model="speed" :min="1" :max="6"></vue-slider>
-            </p>
-            <p>
-              Размер
-              <vue-slider v-model="size" :min="1" :max="5"></vue-slider>
-            </p>
-          </div>
-        </li>
-      </ul>
-      <form class="form-inline ml-4">
+      <div class="navbar-text mr-3">
+        <span>{{ $t('speed') }}:</span>
+        <span class="d-inline-block vertical-middle" style="width: 100px;">
+          <vue-slider v-model="speed" tooltipPlacement="bottom" :min="1" :max="6"></vue-slider>
+        </span>
+      </div>
+
+      <div class="navbar-text mr-3">
+        <span>{{ $t('size') }}:</span>
+        <span class="d-inline-block vertical-middle" style="width: 100px;">
+          <vue-slider v-model="size" tooltipPlacement="bottom" :min="1" :max="5"></vue-slider>
+        </span>
+      </div>
+
+      <form class="form-inline navbar-text mr-4">
+        <div class="form-check">
+          <label class="cursor-pointer mb-0"><input type="checkbox" class="form-check-input" v-model="boobs"> {{ $t('boobs') }}</label>
+        </div>
+      </form>
+
+      <form class="form-inline">
         <button class="btn" :class="{'btn-success': ! playing, 'btn-danger': playing}" type="button" @click.prevent="playing = ! playing" title="Также можно нажать пробел">
-          <span v-if="! playing">Старт</span>
-          <span v-else>Стоп</span>
+          <span v-if="! playing">{{ $t('start') }}</span>
+          <span v-else>{{ $t('stop') }}</span>
         </button>
       </form>
     </navbar>
@@ -42,10 +45,16 @@ import VueNumberInput from '@chenfengyuan/vue-number-input'
 import VueSlider from 'vue-slider-component'
 import { setTimeout, clearTimeout } from 'timers';
 
-const all = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с',
-        'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ы', 'э', 'ю', 'я']
+const alphabet = {
+  ru: ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с',
+    'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ы', 'э', 'ю', 'я'],
+  en: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'z'],
+}
 
-const lros = ['л', 'п', 'о']
+const sides = {
+  ru: ['л', 'п', 'о'],
+  en: ['l', 'r', 'b'],
+}
 
 const speeds = [5000, 3000, 2000, 1000, 500, 250]
 
@@ -70,6 +79,7 @@ export default {
       l3: '',
       speed: 1,
       size: 3,
+      boobs: false,
       timeout: 1000,
       timeoutId: null,
       playing: true,
@@ -101,12 +111,20 @@ export default {
       return {
         top: this.posY + 'px',
         left: this.posX + 'px',
-        fontSize: (this.size * 20 + 40) + 'px',
+        fontSize: (this.size * 40 + 40) + 'px',
       }
     },
 
     showTits () {
-      return this.round > 25 && Math.random() > 0.95
+      return this.boobs && this.round > 25 && Math.random() > 0.95
+    },
+
+    alpha () {
+      return alphabet[this.$i18n.locale]
+    },
+
+    side () {
+      return sides[this.$i18n.locale]
     },
   },
 
@@ -126,10 +144,11 @@ export default {
     },
 
     recalc () {
-      this.l1 = all[Math.round(Math.random() * (all.length - 1))]
-      this.l2 = lros[Math.round(Math.random() * (lros.length - 1))]
-      this.l3 = lros[Math.round(Math.random() * (lros.length - 1))]
+      this.l1 = this.alpha[Math.round(Math.random() * (this.alpha.length - 1))]
+      this.l2 = this.side[Math.round(Math.random() * (this.side.length - 1))]
+      this.l3 = this.side[Math.round(Math.random() * (this.side.length - 1))]
       this.$nextTick(() => {
+        if (! this.$refs.game || ! this.$refs.letters) return
         this.posX = 25 + Math.round((this.$refs.game.clientWidth - this.$refs.letters.clientWidth - 50) * Math.random())
         this.posY = 25 + Math.round((this.$refs.game.clientHeight - this.$refs.letters.clientHeight - 50) * Math.random())
       })
