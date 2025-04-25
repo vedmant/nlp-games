@@ -4,20 +4,20 @@
       <div class="navbar-text mr-3">
         <span>{{ $t('speed') }}:</span>
         <span class="d-inline-block vertical-middle" style="width: 100px;">
-          <vue-slider v-model="speed" tooltipPlacement="bottom" :min="1" :max="6"></vue-slider>
+          <input type="range" v-model="speed" :min="1" :max="6" style="max-width: 100%;">
         </span>
       </div>
 
       <div class="navbar-text mr-3">
         <span>{{ $t('size') }}:</span>
         <span class="d-inline-block vertical-middle" style="width: 100px;">
-          <vue-slider v-model="size" tooltipPlacement="bottom" :min="1" :max="5"></vue-slider>
+          <input type="range" v-model="size" :min="1" :max="5" style="max-width: 100%;">
         </span>
       </div>
 
       <form class="form-inline navbar-text mr-4">
         <div class="form-check">
-          <label class="cursor-pointer mb-0"><input type="checkbox" class="form-check-input" v-model="boobs"> {{ $t('boobs') }}</label>
+          <label class="cursor-pointer mb-0"><input type="checkbox" class="form-check-input" v-model="boobs">{{ $t('boobs') }}</label>
         </div>
       </form>
 
@@ -40,10 +40,7 @@
 </template>
 
 <script>
-import Navbar from './Navbar'
-import VueNumberInput from '@chenfengyuan/vue-number-input'
-import VueSlider from 'vue-slider-component'
-import { setTimeout, clearTimeout } from 'timers';
+import Navbar from '../../components/Navbar.vue'
 
 const alphabet = {
   ru: ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с',
@@ -59,15 +56,14 @@ const sides = {
 const speeds = [5000, 3000, 2000, 1000, 500, 250]
 
 export default {
-  name: 'alpha',
+  components: {Navbar},
+
   props: {
     three: {
       type: Boolean,
       default: true,
     }
   },
-
-  components: {Navbar, VueSlider},
 
   data () {
     return {
@@ -171,6 +167,6 @@ export default {
   }
   .tits {
     position: absolute; top: 50%; left: 50%; margin-left: -201px; margin-top: -175px;
-    width: 403px; height: 351px; background-image: url(../assets/tits.jpg); background-size: contain;
+    width: 403px; height: 351px; background-image: url(../../public/tits.jpg); background-size: contain;
   }
 </style>

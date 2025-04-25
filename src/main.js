@@ -5,8 +5,8 @@ import jQuery from 'jquery'
 import 'bootstrap'
 import './scss/index.scss'
 import VueI18n from 'vue-i18n'
-import en from './i18n/en.json'
-import ru from './i18n/ru.json'
+import en from '~/i18n/locales/en.json'
+import ru from '~/i18n/locales/ru.json'
 
 window.$ = window.jQuery = jQuery
 

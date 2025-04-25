@@ -7,15 +7,21 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <router-link tag="li" to="/alpha2" class="nav-item" active-class="active">
-          <a class="nav-link">{{ $t('alpha2') }}</a>
-        </router-link>
-        <router-link tag="li" to="/alpha3" class="nav-item" active-class="active">
-          <a class="nav-link">{{ $t('alpha3') }}</a>
-        </router-link>
-        <router-link tag="li" to="/rainbow" class="nav-item" active-class="active">
-          <a class="nav-link">{{ $t('rainbow') }}</a>
-        </router-link>
+        <li class="nav-item">
+          <NuxtLink tag="li" to="/alpha/2" class="nav-link" active-class="active">
+             {{ $t('alpha2') }}
+          </NuxtLink>
+        </li>
+        <li class="nav-item">
+          <NuxtLink tag="li" to="/alpha/3" class="nav-link" active-class="active">
+            {{ $t('alpha3') }}
+          </NuxtLink>
+        </li>
+        <li class="nav-item">
+          <NuxtLink tag="li" to="/rainbow" class="nav-link" active-class="active">
+            {{ $t('rainbow') }}
+          </NuxtLink>
+        </li>
       </ul>
 
       <form class="form-inline mr-auto">
@@ -27,3 +33,4 @@
     </div>
   </nav>
 </template>
+
