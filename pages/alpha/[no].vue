@@ -1,33 +1,27 @@
 <template>
   <div>
-    <navbar>
-      <div class="navbar-text mr-3">
-        <span>{{ $t('speed') }}:</span>
-        <span class="d-inline-block vertical-middle" style="width: 100px;">
+    <Navbar>
+
+      <div class="flex gap-6 items-center">
+        <div class="flex gap-2 items-center">
+          <span>{{ $t('speed') }}:</span>
           <input type="range" v-model="speed" :min="1" :max="6" style="max-width: 100%;">
-        </span>
-      </div>
-
-      <div class="navbar-text mr-3">
-        <span>{{ $t('size') }}:</span>
-        <span class="d-inline-block vertical-middle" style="width: 100px;">
-          <input type="range" v-model="size" :min="1" :max="5" style="max-width: 100%;">
-        </span>
-      </div>
-
-      <form class="form-inline navbar-text mr-4">
-        <div class="form-check">
-          <label class="cursor-pointer mb-0"><input type="checkbox" class="form-check-input" v-model="boobs">{{ $t('boobs') }}</label>
         </div>
-      </form>
 
-      <form class="form-inline">
-        <button class="btn" :class="{'btn-success': ! playing, 'btn-danger': playing}" type="button" @click.prevent="playing = ! playing" title="Также можно нажать пробел">
+        <div class="flex gap-2 items-center">
+          <span>{{ $t('size') }}:</span>
+          <input type="range" v-model="size" :min="1" :max="6" style="max-width: 100%;">
+        </div>
+
+        <label class="cursor-pointer flex items-center gap-2"><input type="checkbox" class="form-check-input" v-model="boobs"> {{ $t('boobs') }}</label>
+
+        <button class="px-3 py-1 rounded-lg text-white" :class="{'bg-green-700': ! playing, 'bg-red-700': playing}" type="button" @click.prevent="playing = ! playing" title="Также можно нажать пробел">
           <span v-if="! playing">{{ $t('start') }}</span>
           <span v-else>{{ $t('stop') }}</span>
         </button>
-      </form>
-    </navbar>
+      </div>
+    </Navbar>
+
     <div class="game" ref="game" @keyup="keyup">
       <div v-show="show && ! showTits" ref="letters" class="letters" :style="styles">
         <div class="l1">{{ l1 }}</div>
@@ -57,13 +51,6 @@ const speeds = [5000, 3000, 2000, 1000, 500, 250]
 
 export default {
   components: {Navbar},
-
-  props: {
-    three: {
-      type: Boolean,
-      default: true,
-    }
-  },
 
   data () {
     return {
@@ -103,6 +90,10 @@ export default {
   },
 
   computed: {
+    three() {
+      return this.$route.params.no === '3'
+    },
+
     styles () {
       return {
         top: this.posY + 'px',
@@ -160,7 +151,7 @@ export default {
 </script>
 
 <style scoped>
-  .game { height: calc(100vh - 56px); position: relative; }
+  .game { height: calc(100vh - 64px); position: relative; }
   .letters {
     position: relative; display: inline-block; line-height: 1;
     text-align: center; text-transform: uppercase; font-weight: bold;

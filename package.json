@@ -10,15 +10,11 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@chenfengyuan/vue-number-input": "^2.0.1",
     "@nuxtjs/i18n": "^9.5.3",
-    "bootstrap": "^4.3.1",
+    "@nuxtjs/tailwindcss": "^6.13.2",
     "nuxt": "^3.16.2",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0",
-    "vue-slider-component": "^3.2.24"
+    "vue-router": "^4.5.0"
   },
-  "devDependencies": {
-    "sass-embedded": "^1.87.0"
-  }
+  "devDependencies": {}
 }
