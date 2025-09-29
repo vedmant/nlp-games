@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
   // css: ['~/assets/main.scss'],
-  ssr: false, // Temporarily disable SSR to fix translations
+
   modules: ['@nuxtjs/i18n', '@nuxtjs/tailwindcss'],
   i18n: {
     defaultLocale: 'en',
