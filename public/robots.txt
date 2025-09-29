@@ -1,2 +1,13 @@
-User-Agent: *
-Disallow:
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://cognigames.com/sitemap.xml
+
+# Language-specific sitemaps
+Sitemap: https://cognigames.com/sitemap-en.xml
+Sitemap: https://cognigames.com/sitemap-ru.xml
+
+# Disallow admin or private areas (if any)
+# Disallow: /admin/
+# Disallow: /private/

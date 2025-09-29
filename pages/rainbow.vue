@@ -18,6 +18,14 @@
           <span v-if="! playing">{{ $t('start') }}</span>
           <span v-else>{{ $t('stop') }}</span>
         </button>
+
+        <NuxtLink 
+          to="/help/rainbow" 
+          class="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200 flex items-center gap-1"
+          title="Help & Instructions"
+        >
+          <span>❓</span>
+        </NuxtLink>
       </div>
     </Navbar>
 

@@ -1,3 +1,7 @@
+// This file is not used in Nuxt 3 - i18n is handled by @nuxtjs/i18n module
+// Commented out to prevent conflicts with Nuxt i18n configuration
+
+/*
 import Vue from 'vue'
 import App from './App'
 import router from './router'
@@ -24,10 +28,11 @@ const i18n = new VueI18n({
   },
 })
 
-/* eslint-disable no-new */
+// eslint-disable no-new
 new Vue({
   el: '#app',
   router,
   render: h => h(App),
   i18n,
 })
+*/
