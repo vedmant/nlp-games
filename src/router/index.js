@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
 import Alpha from '@/components/Alpha'
+import Home from '@/components/Home'
 import Rainbow from '@/components/Rainbow'
 
 Vue.use(Router)
@@ -17,13 +17,13 @@ const router = new Router({
       path: '/alpha2',
       name: 'Alphabet 2',
       component: Alpha,
-      props: {three: false},
+      props: { three: false },
     },
     {
       path: '/alpha3',
       name: 'Alphabet 3',
       component: Alpha,
-      props: {three: true},
+      props: { three: true },
     },
     {
       path: '/rainbow',
@@ -34,6 +34,5 @@ const router = new Router({
 })
 
 router.replace('/alpha2')
-
 
 export default router

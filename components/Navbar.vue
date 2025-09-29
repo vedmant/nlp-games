@@ -6,29 +6,29 @@
       </NuxtLink>
 
       <div class="hidden md:flex gap-4 items-center">
-        <NuxtLink 
-          :to="$localePath('/rainbow')" 
+        <NuxtLink
+          :to="$localePath('/rainbow')"
           class="px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2"
         >
           <span>🌈</span>
           {{ $t('rainbow') }}
         </NuxtLink>
-        <NuxtLink 
-          :to="$localePath('/alpha/2')" 
+        <NuxtLink
+          :to="$localePath('/alpha/2')"
           class="px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2"
         >
           <span>🔤</span>
           {{ $t('alpha2') }}
         </NuxtLink>
-        <NuxtLink 
-          :to="$localePath('/alpha/3')" 
+        <NuxtLink
+          :to="$localePath('/alpha/3')"
           class="px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2"
         >
           <span>🔤</span>
           {{ $t('alpha3') }}
         </NuxtLink>
-        <NuxtLink 
-          :to="$localePath('/help')" 
+        <NuxtLink
+          :to="$localePath('/help')"
           class="px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2"
         >
           <span>❓</span>
@@ -39,17 +39,17 @@
 
     <div class="flex items-center gap-4">
       <slot />
-      
-      <button 
-        class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 px-4 py-2 rounded-lg text-white transition-all duration-200 transform hover:scale-105" 
-        v-if="$i18n.locale.value === 'ru'" 
+
+      <button
+        v-if="$i18n.locale.value === 'ru'"
+        class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 px-4 py-2 rounded-lg text-white transition-all duration-200 transform hover:scale-105"
         @click="switchLanguage('en')"
       >
         🇺🇸 English
       </button>
-      <button 
-        class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 px-4 py-2 rounded-lg text-white transition-all duration-200 transform hover:scale-105" 
-        v-else 
+      <button
+        v-else
+        class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 px-4 py-2 rounded-lg text-white transition-all duration-200 transform hover:scale-105"
         @click="switchLanguage('ru')"
       >
         🇷🇺 Русский
@@ -60,15 +60,13 @@
 
 <script setup>
 const { $i18n } = useNuxtApp()
-const route = useRoute()
-const router = useRouter()
 const switchLocalePath = useSwitchLocalePath()
 const { trackLanguageSwitch } = useAnalytics()
 
-const switchLanguage = async (locale) => {
+async function switchLanguage(locale) {
   // Track language switch
   trackLanguageSwitch($i18n.locale.value, locale)
-  
+
   // Use switchLocalePath to get the localized URL for current page
   const localizedPath = switchLocalePath(locale)
   await navigateTo(localizedPath)
