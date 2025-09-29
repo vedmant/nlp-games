@@ -31,12 +31,16 @@
     </Navbar>
 
     <div class="game" ref="game" @keyup="keyup">
-      <div v-show="show && ! showTits" ref="letters" class="letters" :style="styles">
-        <div class="l1">{{ l1 }}</div>
-        <div class="l2">{{ l2 }}</div>
-        <div class="l2" v-if="three">{{ l3 }}</div>
-      </div>
-      <div class="tits" v-show="showTits"></div>
+      <Transition name="letters-appear" mode="out-in">
+        <div v-if="show && ! showTits" ref="letters" class="letters" :style="styles" :key="l1 + l2 + l3">
+          <div class="l1">{{ l1 }}</div>
+          <div class="l2">{{ l2 }}</div>
+          <div class="l2" v-if="three">{{ l3 }}</div>
+        </div>
+      </Transition>
+      <Transition name="tits-appear">
+        <div class="tits" v-if="showTits"></div>
+      </Transition>
     </div>
   </div>
 </template>
@@ -139,14 +143,29 @@ export default {
     },
 
     recalc () {
+      // Calculate position before changing content
+      if (this.$refs.game) {
+        const gameWidth = this.$refs.game.clientWidth
+        const gameHeight = this.$refs.game.clientHeight
+        const fontSize = this.size * 40 + 40
+        const lettersWidth = fontSize * 0.8 // Single letter width
+        const lettersHeight = fontSize * (this.three ? 3.5 : 2.5) // Stacked letters height (2 or 3 letters)
+        const margin = 25
+        
+        // Ensure letters stay within bounds
+        this.posX = Math.max(margin, Math.min(
+          gameWidth - lettersWidth - margin,
+          margin + Math.round((gameWidth - lettersWidth - margin * 2) * Math.random())
+        ))
+        this.posY = Math.max(margin, Math.min(
+          gameHeight - lettersHeight - margin,
+          margin + Math.round((gameHeight - lettersHeight - margin * 2) * Math.random())
+        ))
+      }
+      
       this.l1 = this.alpha[Math.round(Math.random() * (this.alpha.length - 1))]
       this.l2 = this.side[Math.round(Math.random() * (this.side.length - 1))]
       this.l3 = this.side[Math.round(Math.random() * (this.side.length - 1))]
-      this.$nextTick(() => {
-        if (! this.$refs.game || ! this.$refs.letters) return
-        this.posX = 25 + Math.round((this.$refs.game.clientWidth - this.$refs.letters.clientWidth - 50) * Math.random())
-        this.posY = 25 + Math.round((this.$refs.game.clientHeight - this.$refs.letters.clientHeight - 50) * Math.random())
-      })
     },
 
     keyup (e) {
@@ -167,5 +186,37 @@ export default {
   .tits {
     position: absolute; top: 50%; left: 50%; margin-left: -201px; margin-top: -175px;
     width: 403px; height: 351px; background-image: url(../../public/tits.jpg); background-size: contain;
+  }
+
+  /* Letters appearance transitions */
+  .letters-appear-enter-active {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .letters-appear-leave-active {
+    transition: all 0.25s ease-in;
+  }
+  .letters-appear-enter-from {
+    opacity: 0;
+    transform: scale(0.7) translateY(-30px) rotate(-5deg);
+  }
+  .letters-appear-leave-to {
+    opacity: 0;
+    transform: scale(1.3) translateY(30px) rotate(5deg);
+  }
+
+  /* Tits appearance transition */
+  .tits-appear-enter-active {
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .tits-appear-leave-active {
+    transition: all 0.3s ease-in;
+  }
+  .tits-appear-enter-from {
+    opacity: 0;
+    transform: scale(0.3) rotate(15deg);
+  }
+  .tits-appear-leave-to {
+    opacity: 0;
+    transform: scale(1.2) rotate(-10deg);
   }
 </style>

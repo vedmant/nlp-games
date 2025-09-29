@@ -30,10 +30,14 @@
     </Navbar>
 
     <div class="game" ref="game" @keyup="keyup">
-      <div v-show="! showTits" ref="word" class="word" :style="styles">
-        {{ word }}
-      </div>
-      <div class="tits" v-show="showTits"></div>
+      <Transition name="word-appear" mode="out-in">
+        <div v-if="! showTits" ref="word" class="word" :style="styles" :key="word + color">
+          {{ word }}
+        </div>
+      </Transition>
+      <Transition name="tits-appear">
+        <div class="tits" v-if="showTits"></div>
+      </Transition>
     </div>
   </div>
 </template>
@@ -54,6 +58,11 @@ export default {
 
   components: {Navbar},
 
+  setup() {
+    const { trackGameStart, trackGameStop, trackSpeedChange, trackSizeChange } = useAnalytics()
+    return { trackGameStart, trackGameStop, trackSpeedChange, trackSizeChange }
+  },
+
   data () {
     return {
       posX: 0,
@@ -67,6 +76,7 @@ export default {
       timeoutId: null,
       playing: true,
       round: 0,
+      gameStartTime: null,
     }
   },
 
@@ -79,13 +89,27 @@ export default {
 
   watch: {
     playing (val) {
-      if (val) this.play()
-      else clearTimeout(this.timeoutId)
+      if (val) {
+        this.gameStartTime = Date.now()
+        this.trackGameStart('rainbow')
+        this.play()
+      } else {
+        if (this.gameStartTime) {
+          const duration = Math.round((Date.now() - this.gameStartTime) / 1000)
+          this.trackGameStop('rainbow', duration)
+        }
+        clearTimeout(this.timeoutId)
+      }
     },
 
     speed (val) {
+      this.trackSpeedChange('rainbow', val)
       this.timeout = speeds[this.speed - 1]
       this.restart()
+    },
+
+    size (val) {
+      this.trackSizeChange('rainbow', val)
     },
   },
 
@@ -124,13 +148,28 @@ export default {
     },
 
     recalc () {
+      // Calculate position before changing content
+      if (this.$refs.game) {
+        const gameWidth = this.$refs.game.clientWidth
+        const gameHeight = this.$refs.game.clientHeight
+        const fontSize = this.size * 40 + 40
+        const wordWidth = fontSize * 6 // Rough estimate based on average word length
+        const wordHeight = fontSize * 1.2 // Font height with some padding
+        const margin = 25
+        
+        // Ensure word stays within bounds
+        this.posX = Math.max(margin, Math.min(
+          gameWidth - wordWidth - margin,
+          margin + Math.round((gameWidth - wordWidth - margin * 2) * Math.random())
+        ))
+        this.posY = Math.max(margin, Math.min(
+          gameHeight - wordHeight - margin,
+          margin + Math.round((gameHeight - wordHeight - margin * 2) * Math.random())
+        ))
+      }
+      
       this.word = this.words[Math.round(Math.random() * (this.words.length - 1))]
       this.color = colors[Math.round(Math.random() * (colors.length - 1))]
-      this.$nextTick(() => {
-        if (! this.$refs.game || ! this.$refs.word) return
-        this.posX = 25 + Math.round((this.$refs.game.clientWidth - this.$refs.word.clientWidth - 50) * Math.random())
-        this.posY = 25 + Math.round((this.$refs.game.clientHeight - this.$refs.word.clientHeight - 50) * Math.random())
-      })
     },
 
     keyup (e) {
@@ -151,5 +190,37 @@ export default {
   .tits {
     position: absolute; top: 50%; left: 50%; margin-left: -201px; margin-top: -175px;
     width: 403px; height: 351px; background-image: url(../public/tits.jpg); background-size: contain;
+  }
+
+  /* Word appearance transitions */
+  .word-appear-enter-active {
+    transition: all 0.3s ease-out;
+  }
+  .word-appear-leave-active {
+    transition: all 0.2s ease-in;
+  }
+  .word-appear-enter-from {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+  .word-appear-leave-to {
+    opacity: 0;
+    transform: scale(1.2) translateY(20px);
+  }
+
+  /* Tits appearance transition */
+  .tits-appear-enter-active {
+    transition: all 0.5s ease-out;
+  }
+  .tits-appear-leave-active {
+    transition: all 0.3s ease-in;
+  }
+  .tits-appear-enter-from {
+    opacity: 0;
+    transform: scale(0.5) rotate(10deg);
+  }
+  .tits-appear-leave-to {
+    opacity: 0;
+    transform: scale(1.1) rotate(-5deg);
   }
 </style>

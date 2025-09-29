@@ -63,8 +63,12 @@ const { $i18n } = useNuxtApp()
 const route = useRoute()
 const router = useRouter()
 const switchLocalePath = useSwitchLocalePath()
+const { trackLanguageSwitch } = useAnalytics()
 
 const switchLanguage = async (locale) => {
+  // Track language switch
+  trackLanguageSwitch($i18n.locale.value, locale)
+  
   // Use switchLocalePath to get the localized URL for current page
   const localizedPath = switchLocalePath(locale)
   await navigateTo(localizedPath)

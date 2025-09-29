@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const GOOGLE_ANALYTICS_ID = 'G-K58TV2208T'
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
@@ -20,6 +22,11 @@ export default defineNuxtConfig({
       redirectOn: 'root'
     }
   },
+  runtimeConfig: {
+    public: {
+      googleAnalyticsId: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || GOOGLE_ANALYTICS_ID
+    }
+  },
   // SEO Configuration
   app: {
     head: {
@@ -29,7 +36,22 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-      ]
+      ],
+      script: process.env.NODE_ENV === 'production' ? [
+        {
+          async: true,
+          src: `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`
+        },
+        {
+          innerHTML: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GOOGLE_ANALYTICS_ID}');
+          `,
+          type: 'text/javascript'
+        }
+      ] : []
     }
   }
 })
