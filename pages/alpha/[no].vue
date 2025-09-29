@@ -12,18 +12,24 @@
           <input v-model="size" type="range" :min="1" :max="6" style="max-width: 100%;">
         </div>
 
-        <label class="cursor-pointer flex items-center gap-2"><input v-model="boobs" type="checkbox"
-            class="form-check-input"> {{ $t('boobs') }}</label>
+        <label class="cursor-pointer flex items-center gap-2"><input
+          v-model="boobs" type="checkbox"
+          class="form-check-input"
+        > {{ $t('boobs') }}</label>
 
-        <button class="px-3 py-1 rounded-lg text-white" :class="{ 'bg-green-700': !playing, 'bg-red-700': playing }"
-          type="button" title="Также можно нажать пробел" @click.prevent="playing = !playing">
+        <button
+          class="px-3 py-1 rounded-lg text-white" :class="{ 'bg-green-700': !playing, 'bg-red-700': playing }"
+          type="button" title="Также можно нажать пробел" @click.prevent="playing = !playing"
+        >
           <span v-if="!playing">{{ $t('start') }}</span>
           <span v-else>{{ $t('stop') }}</span>
         </button>
 
-        <NuxtLink to="/help/alphabet"
+        <NuxtLink
+          to="/help/alphabet"
           class="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200 flex items-center gap-1"
-          title="Help & Instructions">
+          title="Help & Instructions"
+        >
           <span>❓</span>
         </NuxtLink>
       </div>
@@ -56,11 +62,13 @@ import Navbar from '../../components/Navbar.vue'
 const alphabet = {
   ru: ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ы', 'э', 'ю', 'я'],
   en: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'z'],
+  es: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
 }
 
 const sides = {
   ru: ['л', 'п', 'о'],
   en: ['l', 'r', 'b'],
+  es: ['i', 'd', 'a'],
 }
 
 const speeds = [5000, 3000, 2000, 1000, 500, 250]
@@ -104,11 +112,11 @@ export default {
     },
 
     alpha() {
-      return alphabet[this.$i18n.locale.value] || alphabet.en
+      return alphabet[this.$i18n.locale] || alphabet.en
     },
 
     side() {
-      return sides[this.$i18n.locale.value] || sides.en
+      return sides[this.$i18n.locale] || sides.en
     },
   },
 

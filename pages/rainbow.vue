@@ -12,18 +12,24 @@
           <input v-model="size" type="range" :min="1" :max="6" style="max-width: 100%;">
         </div>
 
-        <label class="cursor-pointer flex items-center gap-2"><input v-model="boobs" type="checkbox"
-            class="form-check-input"> {{ $t('boobs') }}</label>
+        <label class="cursor-pointer flex items-center gap-2"><input
+          v-model="boobs" type="checkbox"
+          class="form-check-input"
+        > {{ $t('boobs') }}</label>
 
-        <button class="px-3 py-1 rounded-lg text-white" :class="{ 'bg-green-700': !playing, 'bg-red-700': playing }"
-          type="button" title="Также можно нажать пробел" @click.prevent="playing = !playing">
+        <button
+          class="px-3 py-1 rounded-lg text-white" :class="{ 'bg-green-700': !playing, 'bg-red-700': playing }"
+          type="button" title="Также можно нажать пробел" @click.prevent="playing = !playing"
+        >
           <span v-if="!playing">{{ $t('start') }}</span>
           <span v-else>{{ $t('stop') }}</span>
         </button>
 
-        <NuxtLink to="/help/rainbow"
+        <NuxtLink
+          to="/help/rainbow"
           class="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200 flex items-center gap-1"
-          title="Help & Instructions">
+          title="Help & Instructions"
+        >
           <span>❓</span>
         </NuxtLink>
       </div>
@@ -49,6 +55,7 @@ const colors = ['red', 'lightgreen', 'yellow', 'blue', 'black']
 const words = {
   ru: ['Красный', 'Зеленый', 'Желтый', 'Синий', 'Черный', 'Голубой', 'Хлопок', 'Прыжок'],
   en: ['Red', 'Green', 'Yellow', 'Blue', 'Black', 'Cyan', 'Clap', 'Jump'],
+  es: ['Rojo', 'Verde', 'Amarillo', 'Azul', 'Negro', 'Cian', 'Aplaudir', 'Saltar'],
 }
 
 const speeds = [5000, 3000, 2000, 1000, 500, 250]
@@ -95,7 +102,7 @@ export default {
     },
 
     words() {
-      return words[this.$i18n.locale.value] || words.en
+      return words[this.$i18n.locale] || words.en
     },
   },
 

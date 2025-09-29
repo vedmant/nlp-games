@@ -4,7 +4,8 @@
 
     <div class="container mx-auto px-4 py-16">
       <div class="text-center mb-16">
-        <div class="w-20 h-20 bg-gradient-to-r from-blue-400 to-green-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+        <div
+          class="w-20 h-20 bg-gradient-to-r from-blue-400 to-green-500 rounded-full mx-auto mb-6 flex items-center justify-center">
           <span class="text-3xl">🔤</span>
         </div>
         <h1 class="text-5xl font-bold text-gray-800 mb-6">
@@ -92,7 +93,8 @@
           <div class="grid md:grid-cols-2 gap-6">
             <div class="space-y-4">
               <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold">
+                <div
+                  class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold shrink-0">
                   1
                 </div>
                 <div>
@@ -105,7 +107,8 @@
                 </div>
               </div>
               <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold">
+                <div
+                  class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold shrink-0">
                   2
                 </div>
                 <div>
@@ -120,7 +123,8 @@
             </div>
             <div class="space-y-4">
               <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold">
+                <div
+                  class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold shrink-0">
                   3
                 </div>
                 <div>
@@ -133,7 +137,8 @@
                 </div>
               </div>
               <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold">
+                <div
+                  class="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold shrink-0">
                   4
                 </div>
                 <div>
@@ -229,24 +234,17 @@
         <!-- Action Buttons -->
         <div class="text-center space-y-4">
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <NuxtLink
-              to="/alpha/2"
-              class="bg-gradient-to-r from-blue-400 to-green-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:from-blue-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105"
-            >
+            <NuxtLink to="/alpha/2"
+              class="bg-gradient-to-r from-blue-400 to-green-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:from-blue-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105">
               {{ $t('play_alpha2') }}
             </NuxtLink>
-            <NuxtLink
-              to="/alpha/3"
-              class="bg-gradient-to-r from-indigo-400 to-purple-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:from-indigo-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105"
-            >
+            <NuxtLink to="/alpha/3"
+              class="bg-gradient-to-r from-indigo-400 to-purple-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:from-indigo-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105">
               {{ $t('play_alpha3') }}
             </NuxtLink>
           </div>
           <div>
-            <NuxtLink
-              to="/help"
-              class="text-gray-600 hover:text-gray-800 transition-colors duration-200"
-            >
+            <NuxtLink to="/help" class="text-gray-600 hover:text-gray-800 transition-colors duration-200">
               ← {{ $t('back_to_help') }}
             </NuxtLink>
           </div>

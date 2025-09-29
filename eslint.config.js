@@ -21,5 +21,7 @@ export default antfu({
     'vue/block-order': ['error', {
       order: ['template', 'script', 'style'],
     }],
+    // Allow Nuxt auto-imports
+    'no-undef': 'off',
   },
 })

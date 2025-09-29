@@ -1,5 +1,4 @@
 <template>
-
   <Head>
     <!-- Language and Direction -->
     <Html :lang="$i18n.locale.value" :dir="$i18n.localeProperties?.dir || 'ltr'" />
@@ -28,8 +27,10 @@
     <Link rel="canonical" :href="canonicalUrl" />
 
     <!-- Alternate Language Versions -->
-    <Link v-for="locale in availableLocales" :key="locale.code" rel="alternate" :hreflang="locale.iso"
-      :href="getLocalizedUrl(locale.code)" />
+    <Link
+      v-for="locale in availableLocales" :key="locale.code" rel="alternate" :hreflang="locale.iso"
+      :href="getLocalizedUrl(locale.code)"
+    />
     <Link rel="alternate" hreflang="x-default" :href="getLocalizedUrl('en')" />
 
     <!-- Additional Meta Tags -->
@@ -67,6 +68,7 @@ const route = useRoute()
 const availableLocales = computed(() => $i18n.locales.value || [
   { code: 'en', iso: 'en-US' },
   { code: 'ru', iso: 'ru-RU' },
+  { code: 'es', iso: 'es-ES' },
 ])
 
 const canonicalUrl = computed(() => {

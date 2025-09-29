@@ -17,7 +17,9 @@
         <!-- Rainbow Game Help -->
         <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-shadow duration-300">
           <div class="text-center mb-6">
-            <div class="w-16 h-16 bg-gradient-to-r from-red-400 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <div
+              class="w-16 h-16 bg-gradient-to-r from-red-400 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center"
+            >
               <span class="text-2xl">🌈</span>
             </div>
             <h2 class="text-3xl font-bold text-gray-800 mb-4">
@@ -63,18 +65,28 @@
 
           <div class="text-center space-y-3">
             <NuxtLink
-              to="/rainbow"
+              :to="$localePath('/rainbow')"
               class="inline-block bg-gradient-to-r from-red-400 to-purple-500 text-white px-8 py-3 rounded-full font-semibold hover:from-red-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-105"
             >
               {{ $t('play_rainbow') }}
             </NuxtLink>
+            <div>
+              <NuxtLink
+                :to="$localePath('/help/rainbow')"
+                class="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200 underline"
+              >
+                {{ $t('how_to_play') }} Rainbow →
+              </NuxtLink>
+            </div>
           </div>
         </div>
 
         <!-- Alphabet Game Help -->
         <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-shadow duration-300">
           <div class="text-center mb-6">
-            <div class="w-16 h-16 bg-gradient-to-r from-blue-400 to-green-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <div
+              class="w-16 h-16 bg-gradient-to-r from-blue-400 to-green-500 rounded-full mx-auto mb-4 flex items-center justify-center"
+            >
               <span class="text-2xl">🔤</span>
             </div>
             <h2 class="text-3xl font-bold text-gray-800 mb-4">
@@ -120,17 +132,25 @@
 
           <div class="space-y-3">
             <NuxtLink
-              to="/alpha/2"
+              :to="$localePath('/alpha/2')"
               class="block w-full bg-gradient-to-r from-blue-400 to-green-500 text-white px-6 py-3 rounded-full font-semibold hover:from-blue-500 hover:to-green-600 transition-all duration-300 text-center"
             >
               {{ $t('play_alpha2') }}
             </NuxtLink>
             <NuxtLink
-              to="/alpha/3"
+              :to="$localePath('/alpha/3')"
               class="block w-full bg-gradient-to-r from-indigo-400 to-purple-500 text-white px-6 py-3 rounded-full font-semibold hover:from-indigo-500 hover:to-purple-600 transition-all duration-300 text-center"
             >
               {{ $t('play_alpha3') }}
             </NuxtLink>
+            <div class="text-center">
+              <NuxtLink
+                :to="$localePath('/help/alphabet')"
+                class="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200 underline"
+              >
+                {{ $t('how_to_play') }} Alphabet →
+              </NuxtLink>
+            </div>
           </div>
         </div>
       </div>

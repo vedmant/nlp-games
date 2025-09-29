@@ -1,11 +1,13 @@
 <template>
-  <nav class="flex justify-between items-center gap-4 bg-gradient-to-r from-gray-900 to-gray-800 text-white p-4 shadow-lg">
-    <div class="flex gap-6 items-center">
-      <NuxtLink to="/" class="text-xl font-bold hover:text-blue-300 transition-colors duration-200">
+  <nav
+    class="flex justify-between items-center gap-2 bg-gradient-to-r from-gray-900 to-gray-800 text-white p-4 shadow-lg"
+  >
+    <div class="flex gap-2 items-center">
+      <NuxtLink :to="$localePath('/')" class="text-xl font-bold hover:text-blue-300 transition-colors duration-200">
         {{ $t('name') }}
       </NuxtLink>
 
-      <div class="hidden md:flex gap-4 items-center">
+      <div class="hidden md:flex gap-2 items-center">
         <NuxtLink
           :to="$localePath('/rainbow')"
           class="px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2"
@@ -37,22 +39,29 @@
       </div>
     </div>
 
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-2">
       <slot />
 
       <button
-        v-if="$i18n.locale.value === 'ru'"
-        class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 px-4 py-2 rounded-lg text-white transition-all duration-200 transform hover:scale-105"
+        v-if="$i18n.locale.value !== 'en'"
+        class="px-3 py-1 rounded-lg text-white transition-all duration-200 transform hover:scale-105 bg-blue-600 hover:bg-blue-700"
         @click="switchLanguage('en')"
       >
-        🇺🇸 English
+        🇺🇸 EN
       </button>
       <button
-        v-else
-        class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 px-4 py-2 rounded-lg text-white transition-all duration-200 transform hover:scale-105"
+        v-if="$i18n.locale.value !== 'ru'"
+        class="px-3 py-1 rounded-lg text-white transition-all duration-200 transform hover:scale-105 bg-blue-600 hover:bg-blue-700"
         @click="switchLanguage('ru')"
       >
-        🇷🇺 Русский
+        🇷🇺 RU
+      </button>
+      <button
+        v-if="$i18n.locale.value !== 'es'"
+        class="px-3 py-1 rounded-lg text-white transition-all duration-200 transform hover:scale-105 bg-blue-600 hover:bg-blue-700"
+        @click="switchLanguage('es')"
+      >
+        🇪🇸 ES
       </button>
     </div>
   </nav>

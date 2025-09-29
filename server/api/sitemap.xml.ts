@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
-  const baseUrl = process.env.NUXT_PUBLIC_BASE_URL || 'https://cognigames.com'
-  const locales = ['en', 'ru']
+  const baseUrl = process.env.NUXT_PUBLIC_BASE_URL || 'https://cogni-games.vedmant.com'
+  const locales = ['en', 'ru', 'es']
 
   // Define your routes
   const routes = [
