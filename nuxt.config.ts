@@ -5,8 +5,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
   // css: ['~/assets/main.scss'],
-
-  modules: ['@nuxtjs/i18n', '@nuxtjs/tailwindcss'],
+  modules: [
+    '@nuxtjs/i18n',
+    '@nuxtjs/tailwindcss',
+    './modules/sitemap-generator',
+  ],
   i18n: {
     defaultLocale: 'en',
     locales: [
