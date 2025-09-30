@@ -1,5 +1,10 @@
 <template>
   <div>
+    <SeoHead
+      :title="$t('rainbow') + ' - ' + $t('name')"
+      :description="$t('rainbow_description')"
+      :keywords="$t('seo_keywords_rainbow')"
+    />
     <Navbar>
       <div class="flex gap-6 items-center">
         <div class="flex gap-2 items-center">

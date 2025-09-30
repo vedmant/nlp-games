@@ -114,5 +114,14 @@
   "start": "Iniciar",
   "stop": "Detener",
   "speed": "Velocidad",
-  "size": "Tamaño"
+  "size": "Tamaño",
+  "seo_keywords_alphabet": "entrenamiento alfabético, reconocimiento de letras, pronunciación, coordinación motora, entrenamiento cognitivo",
+  "seo_two_letters": "dos letras",
+  "seo_three_letters": "tres letras",
+  "seo_beginner": "principiante",
+  "seo_advanced": "avanzado",
+  "seo_keywords_rainbow": "efecto Stroop, asociación color-palabra, entrenamiento cognitivo, entrenamiento de atención, juegos cerebrales",
+  "seo_keywords_help": "ayuda, instrucciones, cómo jugar, entrenamiento cognitivo, juegos cerebrales, tutorial",
+  "seo_keywords_rainbow_help": "ayuda juego arcoíris, tutorial efecto Stroop, asociación color-palabra, entrenamiento cognitivo, entrenamiento de atención",
+  "seo_keywords_alphabet_help": "ayuda juego alfabético, tutorial reconocimiento de letras, entrenamiento de pronunciación, coordinación motora, entrenamiento cognitivo"
 }

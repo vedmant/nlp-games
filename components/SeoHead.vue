@@ -72,13 +72,15 @@ const availableLocales = computed(() => $i18n.locales.value || [
 ])
 
 const canonicalUrl = computed(() => {
-  const baseUrl = process.env.NUXT_PUBLIC_BASE_URL || 'https://cognigames.com'
+  const config = useRuntimeConfig()
+  const baseUrl = config.public.baseUrl
   return `${baseUrl}${route.path}`
 })
 
 // Methods
 function getLocalizedUrl(localeCode) {
-  const baseUrl = process.env.NUXT_PUBLIC_BASE_URL || 'https://cognigames.com'
+  const config = useRuntimeConfig()
+  const baseUrl = config.public.baseUrl
   if (localeCode === 'en') {
     return baseUrl + route.path.replace(/^\/[a-z]{2}\//, '/')
   }

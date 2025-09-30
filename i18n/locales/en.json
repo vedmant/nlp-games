@@ -114,5 +114,14 @@
   "start": "Start",
   "stop": "Stop",
   "speed": "Speed",
-  "size": "Size"
+  "size": "Size",
+  "seo_keywords_alphabet": "alphabet training, letter recognition, pronunciation, motor coordination, cognitive training",
+  "seo_two_letters": "two letters",
+  "seo_three_letters": "three letters",
+  "seo_beginner": "beginner",
+  "seo_advanced": "advanced",
+  "seo_keywords_rainbow": "Stroop effect, color-word association, cognitive training, attention training, brain games",
+  "seo_keywords_help": "help, instructions, how to play, cognitive training, brain games, tutorial",
+  "seo_keywords_rainbow_help": "rainbow game help, Stroop effect tutorial, color-word association, cognitive training, attention training",
+  "seo_keywords_alphabet_help": "alphabet game help, letter recognition tutorial, pronunciation training, motor coordination, cognitive training"
 }

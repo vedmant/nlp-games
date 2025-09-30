@@ -29,6 +29,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       googleAnalyticsId: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS_ID || GOOGLE_ANALYTICS_ID,
+      baseUrl: process.env.NUXT_PUBLIC_BASE_URL || 'https://cogni-games.vedmant.com',
     },
   },
   // SEO Configuration

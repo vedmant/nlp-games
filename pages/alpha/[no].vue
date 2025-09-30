@@ -1,5 +1,10 @@
 <template>
   <div>
+    <SeoHead
+      :title="getPageTitle()"
+      :description="getPageDescription()"
+      :keywords="getPageKeywords()"
+    />
     <Navbar>
       <div class="flex gap-6 items-center">
         <div class="flex gap-2 items-center">
@@ -190,6 +195,23 @@ export default {
       if (e.keyCode === 32) {
         this.playing = !this.playing
       }
+    },
+
+    // SEO methods
+    getPageTitle() {
+      const no = this.$route.params.no
+      return `${this.$t('alpha' + no)} - ${this.$t('name')}`
+    },
+
+    getPageDescription() {
+      const no = this.$route.params.no
+      return no === '2' ? this.$t('alpha2_description') : this.$t('alpha3_description')
+    },
+
+    getPageKeywords() {
+      const no = this.$route.params.no
+      const baseKeywords = this.$t('seo_keywords_alphabet')
+      return no === '2' ? `${baseKeywords}, ${this.$t('seo_two_letters')}, ${this.$t('seo_beginner')}` : `${baseKeywords}, ${this.$t('seo_three_letters')}, ${this.$t('seo_advanced')}`
     },
   },
 }
