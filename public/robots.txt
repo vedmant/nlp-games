@@ -4,10 +4,6 @@ Allow: /
 # Sitemaps
 Sitemap: https://cogni-games.vedmant.com/sitemap.xml
 
-# Language-specific sitemaps
-Sitemap: https://cogni-games.vedmant.com/sitemap-en.xml
-Sitemap: https://cogni-games.vedmant.com/sitemap-ru.xml
-
 # Disallow admin or private areas (if any)
 # Disallow: /admin/
 # Disallow: /private/
