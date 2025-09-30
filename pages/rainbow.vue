@@ -1,7 +1,7 @@
 <template>
   <div>
     <SeoHead
-      :title="$t('rainbow') + ' - ' + $t('name')"
+      :title="`${$t('rainbow')} - ${$t('name')}`"
       :description="$t('rainbow_description')"
       :keywords="$t('seo_keywords_rainbow')"
     />

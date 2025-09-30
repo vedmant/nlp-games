@@ -200,7 +200,7 @@ export default {
     // SEO methods
     getPageTitle() {
       const no = this.$route.params.no
-      return `${this.$t('alpha' + no)} - ${this.$t('name')}`
+      return `${this.$t(`alpha${no}`)} - ${this.$t('name')}`
     },
 
     getPageDescription() {

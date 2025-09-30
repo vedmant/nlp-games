@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-blue-50 to-green-100">
     <SeoHead
-      :title="$t('alphabet_games') + ' - ' + $t('help_title') + ' - ' + $t('name')"
+      :title="`${$t('alphabet_games')} - ${$t('help_title')} - ${$t('name')}`"
       :description="$t('alphabet_help_description')"
       :keywords="$t('seo_keywords_alphabet_help')"
     />
