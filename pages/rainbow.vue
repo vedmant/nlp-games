@@ -26,7 +26,7 @@
         </button>
 
         <NuxtLink
-          to="/help/rainbow"
+          :to="$localePath('/help/rainbow')"
           class="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200 flex items-center gap-1"
           title="Help & Instructions"
         >
