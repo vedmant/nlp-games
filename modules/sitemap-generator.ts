@@ -182,5 +182,29 @@ export default defineNuxtModule({
         console.warn('📋 Sitemap copied to output directory')
       }
     })
+
+    // Additional hook for static generation compatibility
+    nuxt.hook('nitro:build:after', async (nitro) => {
+      // Fallback: ensure sitemap is in the final output
+      const sourcePath = path.resolve(nuxt.options.srcDir, '..', options.outputPath)
+      const targetPath = path.resolve(nitro.options.output.publicDir, 'sitemap.xml')
+
+      if (fs.existsSync(sourcePath) && !fs.existsSync(targetPath)) {
+        fs.copyFileSync(sourcePath, targetPath)
+        console.warn('📋 Sitemap copied to output directory (fallback)')
+      }
+    })
+
+    // Hook for static generation
+    nuxt.hook('nitro:prerender:route', async (route) => {
+      // Ensure sitemap is available during prerendering
+      const sourcePath = path.resolve(nuxt.options.srcDir, '..', options.outputPath)
+      const targetPath = path.resolve(nuxt.options.nitro.output.publicDir, 'sitemap.xml')
+
+      if (fs.existsSync(sourcePath) && !fs.existsSync(targetPath)) {
+        fs.copyFileSync(sourcePath, targetPath)
+        console.warn('📋 Sitemap copied during prerendering')
+      }
+    })
   },
 })
