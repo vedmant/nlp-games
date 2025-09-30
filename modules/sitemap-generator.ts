@@ -58,16 +58,24 @@ export default defineNuxtModule({
         console.warn('📄 Found routes:', uniqueRoutes)
 
         const sitemap = generateSitemap(uniqueRoutes)
-        const outputPath = path.resolve(nuxt.options.srcDir, '..', options.outputPath)
 
-        // Ensure the directory exists
-        const outputDir = path.dirname(outputPath)
-        if (!fs.existsSync(outputDir)) {
-          fs.mkdirSync(outputDir, { recursive: true })
+        // Generate in multiple locations to ensure Cloudflare Pages compatibility
+        const outputPaths = [
+          path.resolve(nuxt.options.srcDir, '..', options.outputPath), // Project public dir
+          path.resolve(process.cwd(), 'public', 'sitemap.xml'), // Absolute public dir
+          path.resolve(process.cwd(), 'dist', 'sitemap.xml'), // Dist dir for Cloudflare
+        ]
+
+        for (const outputPath of outputPaths) {
+          // Ensure the directory exists
+          const outputDir = path.dirname(outputPath)
+          if (!fs.existsSync(outputDir)) {
+            fs.mkdirSync(outputDir, { recursive: true })
+          }
+
+          fs.writeFileSync(outputPath, sitemap, 'utf8')
+          console.warn('✅ Sitemap generated at:', outputPath)
         }
-
-        fs.writeFileSync(outputPath, sitemap, 'utf8')
-        console.warn('✅ Sitemap generated for static deployment at:', outputPath)
       }
       catch (error) {
         console.error('❌ Error generating sitemap for static deployment:', error)
@@ -203,21 +211,32 @@ export default defineNuxtModule({
     // Hook that runs after the build is complete
     nuxt.hook('nitro:build:before', async (nitro) => {
       // Ensure sitemap is copied to the output directory
-      const sourcePath = path.resolve(nuxt.options.srcDir, '..', options.outputPath)
+      const sourcePaths = [
+        path.resolve(nuxt.options.srcDir, '..', options.outputPath),
+        path.resolve(process.cwd(), 'public', 'sitemap.xml'),
+        path.resolve(process.cwd(), 'dist', 'sitemap.xml'),
+      ]
+
       const targetPath = path.resolve(nitro.options.output.publicDir, 'sitemap.xml')
+      let sourceFound = false
 
-      if (fs.existsSync(sourcePath)) {
-        fs.copyFileSync(sourcePath, targetPath)
-        console.warn('📋 Sitemap copied to output directory')
-      }
-      else {
-        // If source doesn't exist, generate it now
-        console.warn('⚠️  Sitemap source not found, generating now...')
-        generateSitemapNow()
-
-        // Try to copy again
+      for (const sourcePath of sourcePaths) {
         if (fs.existsSync(sourcePath)) {
           fs.copyFileSync(sourcePath, targetPath)
+          console.warn('📋 Sitemap copied to output directory from:', sourcePath)
+          sourceFound = true
+          break
+        }
+      }
+
+      if (!sourceFound) {
+        // If no source exists, generate it now
+        console.warn('⚠️  No sitemap source found, generating now...')
+        generateSitemapNow()
+
+        // Try to copy from the first generated location
+        if (fs.existsSync(sourcePaths[0])) {
+          fs.copyFileSync(sourcePaths[0], targetPath)
           console.warn('📋 Sitemap generated and copied to output directory')
         }
         else {
