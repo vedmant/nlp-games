@@ -183,27 +183,33 @@ export default defineNuxtModule({
       }
     })
 
-    // Additional hook for static generation compatibility
-    nuxt.hook('nitro:build:after', async (nitro) => {
-      // Fallback: ensure sitemap is in the final output
-      const sourcePath = path.resolve(nuxt.options.srcDir, '..', options.outputPath)
-      const targetPath = path.resolve(nitro.options.output.publicDir, 'sitemap.xml')
+    // Ensure sitemap is available in the public directory for static generation
+    nuxt.hook('ready', async () => {
+      // Generate sitemap immediately when Nuxt is ready
+      try {
+        console.warn('🔍 Generating sitemap for static deployment...')
 
-      if (fs.existsSync(sourcePath) && !fs.existsSync(targetPath)) {
-        fs.copyFileSync(sourcePath, targetPath)
-        console.warn('📋 Sitemap copied to output directory (fallback)')
+        const pagesDir = path.resolve(nuxt.options.srcDir, 'pages')
+        const routes = findPageFiles(pagesDir)
+        const uniqueRoutes = [...new Set(routes)].sort()
+
+        console.warn('🌍 Detected locales:', locales)
+        console.warn('📄 Found routes:', uniqueRoutes)
+
+        const sitemap = generateSitemap(uniqueRoutes)
+        const outputPath = path.resolve(nuxt.options.srcDir, '..', options.outputPath)
+
+        // Ensure the directory exists
+        const outputDir = path.dirname(outputPath)
+        if (!fs.existsSync(outputDir)) {
+          fs.mkdirSync(outputDir, { recursive: true })
+        }
+
+        fs.writeFileSync(outputPath, sitemap, 'utf8')
+        console.warn('✅ Sitemap generated for static deployment at:', outputPath)
       }
-    })
-
-    // Hook for static generation
-    nuxt.hook('nitro:prerender:route', async (route) => {
-      // Ensure sitemap is available during prerendering
-      const sourcePath = path.resolve(nuxt.options.srcDir, '..', options.outputPath)
-      const targetPath = path.resolve(nuxt.options.nitro.output.publicDir, 'sitemap.xml')
-
-      if (fs.existsSync(sourcePath) && !fs.existsSync(targetPath)) {
-        fs.copyFileSync(sourcePath, targetPath)
-        console.warn('📋 Sitemap copied during prerendering')
+      catch (error) {
+        console.error('❌ Error generating sitemap for static deployment:', error)
       }
     })
   },
