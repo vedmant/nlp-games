@@ -45,6 +45,35 @@ export default defineNuxtModule({
 
     const locales = getLocales()
 
+    // Generate sitemap immediately when module loads (before any build process)
+    const generateSitemapNow = () => {
+      try {
+        console.warn('🔍 Generating sitemap for static deployment...')
+
+        const pagesDir = path.resolve(nuxt.options.srcDir, 'pages')
+        const routes = findPageFiles(pagesDir)
+        const uniqueRoutes = [...new Set(routes)].sort()
+
+        console.warn('🌍 Detected locales:', locales)
+        console.warn('📄 Found routes:', uniqueRoutes)
+
+        const sitemap = generateSitemap(uniqueRoutes)
+        const outputPath = path.resolve(nuxt.options.srcDir, '..', options.outputPath)
+
+        // Ensure the directory exists
+        const outputDir = path.dirname(outputPath)
+        if (!fs.existsSync(outputDir)) {
+          fs.mkdirSync(outputDir, { recursive: true })
+        }
+
+        fs.writeFileSync(outputPath, sitemap, 'utf8')
+        console.warn('✅ Sitemap generated for static deployment at:', outputPath)
+      }
+      catch (error) {
+        console.error('❌ Error generating sitemap for static deployment:', error)
+      }
+    }
+
     // Function to recursively find all page files
     function findPageFiles(dir: string, basePath = ''): string[] {
       const files: string[] = []
@@ -181,36 +210,26 @@ export default defineNuxtModule({
         fs.copyFileSync(sourcePath, targetPath)
         console.warn('📋 Sitemap copied to output directory')
       }
-    })
+      else {
+        // If source doesn't exist, generate it now
+        console.warn('⚠️  Sitemap source not found, generating now...')
+        generateSitemapNow()
 
-    // Ensure sitemap is available in the public directory for static generation
-    nuxt.hook('ready', async () => {
-      // Generate sitemap immediately when Nuxt is ready
-      try {
-        console.warn('🔍 Generating sitemap for static deployment...')
-
-        const pagesDir = path.resolve(nuxt.options.srcDir, 'pages')
-        const routes = findPageFiles(pagesDir)
-        const uniqueRoutes = [...new Set(routes)].sort()
-
-        console.warn('🌍 Detected locales:', locales)
-        console.warn('📄 Found routes:', uniqueRoutes)
-
-        const sitemap = generateSitemap(uniqueRoutes)
-        const outputPath = path.resolve(nuxt.options.srcDir, '..', options.outputPath)
-
-        // Ensure the directory exists
-        const outputDir = path.dirname(outputPath)
-        if (!fs.existsSync(outputDir)) {
-          fs.mkdirSync(outputDir, { recursive: true })
+        // Try to copy again
+        if (fs.existsSync(sourcePath)) {
+          fs.copyFileSync(sourcePath, targetPath)
+          console.warn('📋 Sitemap generated and copied to output directory')
         }
-
-        fs.writeFileSync(outputPath, sitemap, 'utf8')
-        console.warn('✅ Sitemap generated for static deployment at:', outputPath)
-      }
-      catch (error) {
-        console.error('❌ Error generating sitemap for static deployment:', error)
+        else {
+          console.error('❌ Failed to generate sitemap for output')
+        }
       }
     })
+
+    // Generate sitemap immediately
+    generateSitemapNow()
+
+    // Also generate on ready hook as backup
+    nuxt.hook('ready', generateSitemapNow)
   },
 })
