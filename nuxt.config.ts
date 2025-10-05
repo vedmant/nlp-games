@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     './modules/sitemap-generator',
   ],
+  nitro: { prerender: { autoSubfolderIndex: false, }, },
   i18n: {
     defaultLocale: 'en',
     locales: [

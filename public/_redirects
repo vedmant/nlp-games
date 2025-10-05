@@ -1,1 +1,1 @@
-/:pathname/  /:pathname  301!
+/*/? * /$1$2 301
